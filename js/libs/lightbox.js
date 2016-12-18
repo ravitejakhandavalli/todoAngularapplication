@@ -9,6 +9,7 @@ myapp.directive('modal', function() {
     link: function(scope, element, attrs) {
       scope.hideModal = function() {
         scope.show = false;
+        
       };
     },
     template: "<div class='ng-modal' ng-show='show'>"+

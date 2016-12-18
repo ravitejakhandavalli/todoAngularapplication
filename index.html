@@ -120,7 +120,8 @@
           </div>
 <!--This modal is to show the lightbox modal where we can edit the title and the descrption of the task -->
           <modal show='modalShown'>
-                <h4 style="text-align:center">YOur Task To Complete</h4>
+            <div class="LightBox-border">
+             <h4 style="text-align:center">YOur Task To Complete</h4>
                 <ul style="list-style:none">
                 <li>  <label style="margin-right:50px;"><strong><em> Task Name: </em></strong></label>
                 <span data-ng-hide="editMode" contentEditable="false" ng-dblclick="editMode = true; editAppKey(taskToEdit)" ng-model="editableTask">{{taskToEdit.TaskTitle}}</span>
@@ -134,9 +135,11 @@
                 <div class="lightboxButtons">
                 <button class="saveButton" type="submit" data-ng-show="editMode" data-ng-click="saveEdit(taskToEdit);editMode = false;" class="btn btn-default">Save</button>
 
-                <button class="cancelButton" type="submit" data-ng-show="editMode" data-ng-click="editMode = false; cancel()" class="btn btn-default">Cancel</button>
+                <button class="cancelButton" type="submit" data-ng-show="editMode" data-ng-click="editMode = false; cancel(taskToEdit)" class="btn btn-default">Cancel</button>
               </div>
-      </li></ul>  </modal>
+      </li></ul>
+</div>
+    </modal>
     <!--  <div class="" ng-repeat="tasks in allTasks">
          <a href="">
            <div class="card">

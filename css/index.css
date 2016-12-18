@@ -1,13 +1,10 @@
-
+head,body{
+  overflow: auto;
+}
 .taskInput,#editModeText {
   padding: 8px;
   width: 250px;
 }
-
-/*#editModeText{
-  padding:8px;
-  width:250px;
-}*/
 
 .buttonFamily{
   background-color:#364ce6;
@@ -239,77 +236,3 @@ li{
 li:not(:last-child) {
     margin-bottom: 5px;
 }
-
-html,
-body {
-  font-size: 100%; }
-
-body {
-  background: white;
-  color: #222222;
-  padding: 0;
-  margin: 0;
-  font-family: "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
-  font-weight: normal;
-  font-style: normal;
-  line-height: 1;
-  position: relative;
-  cursor: default;
-}
-
-/*.row {
-  width: 100%;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 0;
-  margin-bottom: 0;
-  max-width: 62.5rem;
-  *zoom: 1; }
-
-*/
-  .reveal-modal-bg {
-  position: fixed;
-  height: 100%;
-  width: 100%;
-  background: black;
-  background: rgba(0, 0, 0, 0.45);
-  z-index: 98;
-  display: none;
-  top: 0;
-  left: 0; }
-
-.reveal-modal {
-  visibility: hidden;
-  display: none;
-  position: absolute;
-  left: 50%;
-  z-index: 99;
-  height: auto;
-  margin-left: -40%;
-  width: 80%;
-  background-color: white;
-  padding: 1.25rem;
-  border: solid 1px #666666;
-  -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
-  top: 6.25rem; }
-  .reveal-modal .column,
-  .reveal-modal .columns {
-    min-width: 0; }
-  .reveal-modal > :first-child {
-    margin-top: 0; }
-  .reveal-modal > :last-child {
-    margin-bottom: 0; }
-  .reveal-modal .close-reveal-modal {
-    font-size: 1.375rem;
-    line-height: 1;
-    position: absolute;
-    top: 0.5rem;
-    right: 0.6875rem;
-    color: #aaaaaa;
-    font-weight: bold;
-    cursor: pointer; }
-
-    @media print {
-  .reveal-modal {
-    background: white !important; } }
