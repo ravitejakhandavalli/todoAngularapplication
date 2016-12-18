@@ -1,94 +1,156 @@
+<!DOCTYPE html>
 <html>
-  <head>
-    <script type="text/javascript" src="js/angular.min.js"></script>
-    <script type="text/javascript" src="js/angular-local-storage.min.js"></script>
-    <script type="text/javascript" src="js/app.js"></script>
+<head>
+    <meta charset="utf-8">
+      <title>Todo Angular Application</title>
+</head>
+<script src="js/libs/angular.min.js"></script>
+<script type="text/javascript" src="js/app.js"></script>
+<script type="text/javascript" src="js/libs/angular-local-storage.min.js"></script>
+<link rel="stylesheet" href="css/index.css">
+<link rel="stylesheet" href="css/lightbox.css">
+<script src="js/libs/jquery.min.js"></script>
+<script src="js/libs/angular-animate.min.js"></script>
+<script src="js/libs/angular-aria.min.js"></script>
+<script src="js/libs/angular-messages.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.css">
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="css/index.css">
+<!-- -->
+<body ng-app="todoApplication" ng-cloak>
 
-    <style type="text/css">
-
-    </style>
-  </head>
-  <body ng-app="ToDo"  ng-controller="toDoContoller" ng-strict-di>
-
-  <div class="header-box">
-    <h class="main-heading">Add Your Daily Tasks</h>
-      <header class="header" >
-
-      <form class="todo-form-submit" ng-keyup="AddTask()">
-      <input id="new-todo" class="required" placeholder="Enter Task" type="text" name="taskName" ng-model="taskName">
-      <input id="new-todo"  placeholder="Enter Task Description" type="text"name="taskDesc" ng-model="taskDesc">
-      </form>
+  <div class="header" ng-controller="mainController">
+    <div class="mainHeader">
+    <h4>Add Your Task</h4>
+      <div class="addTasksWithTime">
+          <input type="text" name="taskName" class="taskInput" placeholder="Enter Task Title" ng-model="taskName" maxlength="25">
+          <input class="taskInput" placeholder="Enter Task Description" type="text"name="taskDesc" ng-model="taskDesc">
+             <md-content>
+                <md-datepicker
+                   ng-model="myDate"
+                   md-placeholder="Pick Date">
+                 </md-datepicker>
+                  <!-- <div class="validation-messages" ng-messages="myForm.dateField.$error">
+                       <div ng-message="valid">The entered value is not a date!</div>
+                      <div ng-message="required">This date is required!</div>
+                      <div ng-message="mindate">Date is too early!</div>
+                      <div ng-message="maxdate">Date is too late!</div>
+                      <div ng-message="filtered">Only weekends are allowed!</div>
+                   </div>-->
+             </md-content>
+             <button ng-click="AddTask()">Add Task</button>
+      </div>
 </div>
-<div class="tasks-body">
-    <table style="clear: left;float: left;">
-
-      <tbody ng-show="type == 'AllTask'">
-        <tr ng-repeat="task in allTasks | filter:statusFilter track by $index">
-          <td style="width: 10%">
-            <input type="checkbox" ng-click="taskCompleted($index)"></td>
-          <td style="width: 20%">
-            <span data-ng-hide="editMode" contentEditable="false" ng-dblclick="editMode = true; editAppKey(task)" ng-model="editableTask">{{task.taskName}}</span>
-            <input id="editModeText" type="text" data-ng-show="editMode" data-ng-model="task.taskName" data-ng-required />
-          </td>
-          <td style="width: 60%" >
-            <span data-ng-hide="editMode" contentEditable="false" ng-dblclick="editMode = true; editAppKey(task)" ng-model="editableDesc">{{task.taskDesc}} </span>
-             <input id="editModeText"type="text" data-ng-show="editMode" data-ng-model="task.taskDesc" data-ng-required />
-            </td>
-          <td style="width: 100px">
-            <i class="fa fa-close" style="color: red;cursor: pointer;"1 ng-click="removeTask('pending', $index)"></i>
-        </td>
-        <td style="width: 150px;">
-              <button type="submit" data-ng-hide="editMode" data-ng-click="editMode = true; editAppKey(task)" class="btn btn-default">Edit</button>
-
-            <button type="submit" data-ng-show="editMode" data-ng-click="saveEdit($index);editMode = false" class="btn btn-default">Save</button>
-
-            <button type="submit" data-ng-show="editMode" data-ng-click="editMode = false; cancel()" class="btn btn-default">Cancel</button>
-</td></td>
-          </td>
-        </tr>
-      </tbody>
-      <tbody ng-show="type == 'CompletedTask'">
-        <tr ng-repeat="completedTask in completedTasks  | filter:statusFilter track by $index" >
-          <td style="width: 10%">
-            <input type="checkbox" ng-click="taskNotCompleted($index)"></td>
-          <td style="width: 20%;">{{completedTask.taskName}}</td>
-          <td style="width: 60%">{{completedTask.taskDesc}}</td>
-          <td align="center" style="width: 100px">
-            <i class="fa fa-close" style="color: red;cursor: pointer;" ng-click="removeTask('completed', $index)"></i></td>
-        </tr>
-        <tr ng-if="allTasks.length == 0">
-          <td colspan="5" align="center"><b>Add tasks</b></td>
-        </tr>
-        <tr ng-if="completedTasks.length == 0">
-          <td colspan="5" align="center"><b>Completed tasks are Null</b></td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-     </header>
 
 
-      <footer id="footer" ng-show="allTasks" ng-cloak >
+      <!-- nav bar to show the diff links -->
+          <nav class="{{type}}" ng-click="assignType(type)" id="navigation">
+                <a href="#" class="AllTask" ng-click="type = 'AllTask'">All</a>
+                <a href="#" class="CompletedTask" ng-click="type = 'CompletedTask'">Completed</a>
+                <a href="#" class="PendingTask" ng-click="type = 'PendingTask'">Todo</a>
+            </nav>
 
-        <td id="filters" ng-model="taskType" style="list-style:none">
 
-        <span  id="count"><strong>{{allTasks.length}}</strong>
-          <ng-pluralize count="allTasks.length" when="{ one: 'item left', other: 'items left' }"></ng-pluralize>
-             </span>
+  <!-- ---------------------------------------------------------------------------------->
+<div class="" ng-show="type == 'PendingTask' ">
+  <div class='md-padding' layout="row" layout-wrap>
+          <md-card class="card" ng-repeat="tasks in allTasks | filter:statusFilter track by $index">
+          <span ng-click='toggleModal(tasks)'>
+              <md-card-content>
+                 <h4>{{tasks.TaskTitle}}</h4>
+                 <h4>{{tasks.TaskDate | date:'dd-MMM-yyyy'}}</h4>
+               <div class="md-actions" layout="row" layout-align="end center">
+               </div>
+             </md-card-content>
+           </sapn>
+           <div>
+           <i id="thumb" class="fa fa-thumbs-up fa-2x" aria-hidden="true" ng-click="taskCompleted($index)" title="Task Completed"></i>
+           <i id="deleteButton" class="fa fa-minus-square fa-2x" ng-click="removeTask('pending', $index)" title="Delete Task"></i>
+</div>
+             </md-card>
+      </div>
+</div>
+<!-- this div is for showing comlpeted Tasks-->
+        <div class="" ng-show="type == 'CompletedTask'">
+          <div class='md-padding' layout="row" layout-wrap>
+                  <md-card class="card" ng-repeat="tasks in completedTasks | filter:statusFilter track by $index ">
 
-            <ul>
+                      <md-card-content>
+                         <h4>{{tasks.TaskTitle}}</h4>
+                         <h4>{{tasks.TaskDate | date:'dd-MMM-yyyy'}}</h4>
+                         <div class="md-actions" layout="row" layout-align="end center">
+                         </div>
+                       </md-card-content>
+                       <div>
+                         <i id="thumb" class="fa fa-thumbs-down fa-2x" aria-hidden="true" ng-click="taskNotCompleted($index)" title="Task Not Completed"></i>
+                         <i id="deleteButton"class="fa fa-minus-square fa-2x" ng-click= "removeTask('completed', $index)" title="Delete Task"></i>
+                    </div>
+                   </md-card>
+              </div>
+        </div>
+<!-- This divv is to show the all tasks both todo and complted Tasks -->
+        <div class="" ng-show="type == 'AllTask' ">
+          <div class='md-padding' layout="row" layout-wrap>
+                  <md-card class="card" ng-repeat="tasks in allTasks | filter:statusFilter track by $index">
+                      <md-card-content>
+                         <h4>{{tasks.TaskTitle}}</h4>
+                         <h4>{{tasks.TaskDate  | date:'dd-MMM-yyyy'}}</h4> <!--date filter to filter date form GMT -->
+                       </md-card-content>
+                       <div class="md-actions" layout="row" layout-align="end center">
+                        <!-- <i id="thumb-up" class="fa fa-thumbs-up fa-2x" aria-hidden="true" ng-click="taskCompleted($index)" title="Task Completed"></i> -->
+                         <!-- <i class="fa fa-minus-square fa-2x" ng-click="removeTask('pending', $index)" title="Delete Task"></i> -->
+                       </div>
+                     </md-card>
+                     <md-card class="card" ng-repeat="tasks in completedTasks | filter:statusFilter track by $index">
+                         <md-card-content>
+                            <h4 style="text-decoration:line-through;font-style:italic">{{tasks.TaskTitle}}</h4>
+                          </br>
+                            <em><strong> Completed Task</strong></em>
+                            <h4>{{tasks.TaskDate  | date:'dd-MMM-yyyy'}}</h4> <!--date filter to filter date form GMT -->
+                          </md-card-content>
+                          <div class="md-actions" layout="row" layout-align="end center">
+                           <!-- <i id="thumb-up" class="fa fa-thumbs-up fa-2x" aria-hidden="true" ng-click="taskCompleted($index)" title="Task Completed"></i> -->
+                            <!-- <i class="fa fa-minus-square fa-2x" ng-click="removeTask('pending', $index)" title="Delete Task"></i> -->
+                          </div>
+                        </md-card>
+
+              </div>
+          </div>
+<!--This modal is to show the lightbox modal where we can edit the title and the descrption of the task -->
+          <modal show='modalShown'>
+                <h4 style="text-align:center">YOur Task To Complete</h4>
+                <ul style="list-style:none">
+                <li>  <label>Task Name:</label>
+                <span data-ng-hide="editMode" contentEditable="false" ng-dblclick="editMode = true; editAppKey(taskToEdit)" ng-model="editableTask">{{taskToEdit.TaskTitle}}</span>
+                <input id="editModeText" type="text" data-ng-show="editMode" data-ng-model="taskToEdit.TaskTitle" data-ng-required />
+              </li>
               <li>
-                <button id="activeTasks-length" data-ng-click="type = 'AllTask'" href="">Active</button>
-              </li>
-              <li> <button id="completedTasks-length" ng-click="type = 'CompletedTask'" href="">Completed</button>
-              </li>
+                <label for="description">Description:</label>
+                <span data-ng-hide="editMode" contentEditable="false" ng-dblclick="editMode = true; editAppKey(taskToEdit)" ng-model="editableDesc">{{taskToEdit.TaskDesc}}</span>
+                 <textarea style="width:300px;height:100px" id="editModeText"type="text" data-ng-show="editMode" data-ng-model="taskToEdit.TaskDesc" data-ng-required /></textarea>
+              <li>
+                <button type="submit" data-ng-show="editMode" data-ng-click="saveEdit(taskToEdit);editMode = false;" class="btn btn-default">Save</button>
 
-            </ul>
-        </footer>
+                <button type="submit" data-ng-show="editMode" data-ng-click="editMode = false; cancel()" class="btn btn-default">Cancel</button>
+        </li></ul>  </modal>
+    <!--  <div class="" ng-repeat="tasks in allTasks">
+         <a href="">
+           <div class="card">
+              <h4><span>{{taskTitle}}</span></h4>
+              <h4><span>{{tasks.TaskDate}}</span></h4>
+              <div class="container">
+                  <div class="button-class">
+                  <i id="thumb-up" class="fa fa-thumbs-up fa-2x" aria-hidden="true" ng-click="taskCompleted($index)" title="Task Completed"></i>
+               <button type="button" name="button completed" ng-click="completed()">Done</button>
+                <i class="fa fa-minus-square fa-2x" ng-click="removeTask('pending', $index)" title="Delete Task"></i>
+                </div>
+           </div>
+         </a>
+        </div>-->
+      </div>
+</div>
+<script type="text/javascript" src="js/libs/lightbox.js"></script>
 
-</section>
-  </body>
+</body>
 </html>

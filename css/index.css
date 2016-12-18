@@ -1,59 +1,275 @@
-html,
-/*body {
-	margin: 0;
-	padding: 0;
-}*/
-.main-heading {
-  margin-top: 10px;
- font-style:italic;
- font-size: 25px;
+
+.taskInput{
+  padding: 8px;
+  width: 250px;
+}
+.md-datepicker-input-container {
+  width: 30px;
+  height: 20px;
+}
+.md-datepicker-input-container[placeholder]{
+  padding:10px;
+}
+.taskInput input[placeholder] {
+  font-size: 20px;
+}
+
+.mainHeader h4{
+  text-align: center;
+  color: red;
+  font-size: 20px;
+}
+
+.mainHeader button{
+  margin: 15px;
+  padding: 5px;
+  width: 100px;
+}
+
+.addTasksWithTime{
+  display:block;
   text-align: center;
 }
-.header	{
-	text-align: center;
-	margin-top: 50px;
-}
-table td{
-   height:50px;
-}
-input[type="text"] {
-  display: inline;
-  margin: 0;
-  width: 250px;
-  height: 35px;
-  font-family: sans-serif;
-  font-size: 16px;
-  box-shadow: none;
-  border-radius: none;
-  background-color:#c1e7fc;
+
+md-card{
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition: 0.3s;
+  border-radius: 10px;
+  width: 200px;
+  height: 250px;
+  border-radius: 10px;
+  margin-left: 50px;
+  background-color:;
 }
 
-footer
+a:link {
+    text-decoration: none;
+}
+
+
+.card:hover{
+  box-shadow: 0 16px 16px 0 rgba(0,0,0,0.4);
+}
+
+.container {
+  padding: 0 0 2px 16px;
+}
+
+.button-class {
+  padding-top: 100px;
+
+}
+
+#thumb{
+  cursor: pointer;
+  color: green;
+  float: right;
+  padding:20px;
+}
+
+#deleteButton{
+  cursor: pointer;
+  color: red;
+  float: left;
+  padding:20px;
+}
+/*
+.button-class i {
+  cursor: pointer;
+  color: red;
+  float: left;
+  padding-right: 5px 5px;
+}*/
+
+
+.card h4{
+text-align: center;
+padding: 10px;
+}
+/*
+.navBardemoBasicUsage md-content .ext-content {
+  padding: 50px;
+  margin: 20px;
+  background-color: #FF5722;
+}*/
+
+nav{
+	display:inline-block;
+	margin:50px auto 35px;
+	background-color:#FF5733;
+	box-shadow:0 1px 1px #ccc;
+	border-radius:2px;
+  width: 100%;
+}
+
+#nav.affix {
+   position: fixed;
+   top: 0;
+   z-index:10;
+   -webkit-transition: all .6s ease-in-out;
+}
+
+#ui-datepicker-div {font-size:11px;}
+
+nav a{
+  float: right;
+	display:inline-block;
+	padding: 18px 30px;
+	color:#fff !important;
+	font-weight:bold;
+	font-size:16px;
+	text-decoration:none !important;
+	line-height:1;
+	text-transform: uppercase;
+	background-color:transparent;
+
+	-webkit-transition:background-color 0.25s;
+	-moz-transition:background-color 0.25s;
+	transition:background-color 0.25s;
+}
+
+nav a:first-child{
+	border-radius: 2px 0 0 2px;
+}
+
+nav a:last-child{
+	border-radius:0 2px 2px 0;
+}
+
+nav.AllTask .AllTask,
+nav.PendingTask .PendingTask,
+nav.NextDay .NextDay,
+nav.CompletedTask .CompletedTask
 {
-    clear: both;
-    margin: 100px;
-    margin-top: 200px;
-}
-    footer *
-    {
-        display: inline;
-    }
-span{
-  font-size: 18px;
-}
-.header-box{
-	
+	background-color:#F5E843;
 }
 
-#editModeText{
-  background-color:#83cffa;
+/*reveal modal css*/
+body{
+  margin: 0;
+  padding: 0;
 }
 
-.circleCheckbox {
-    width: 100px;
-   height: 100px;
-   background: red;
-   -moz-border-radius: 50px;
-   -webkit-border-radius: 50px;
-   border-radius: 50px;
+.reveal-modal{
+  min-height: 300px;
 }
+
+.ng-modal {
+  transition: 0.2s ease-in-out opacity;
+}
+
+.ng-modal .reveal-modal {
+  display: block;
+  visibility: visible;
+}
+
+.ng-modal .reveal-modal-bg {
+  display: block;
+}
+
+.ng-modal.ng-hide-add,
+.ng-modal.ng-hide-remove{
+  display: block !important;
+}
+
+.ng-modal.ng-hide{
+  opacity: 0;
+}
+
+.reveal-modal{
+  transition: 0.2s ease-in-out all;
+  transition-delay: 0.2s;
+  -webkit-transform: scale(1);
+  opacity: 1;
+}
+
+.reveal-modal.ng-hide-add,
+.reveal-modal.ng-hide-remove{
+  display: block !important;
+}
+
+.reveal-modal.ng-hide{
+  -webkit-transform: scale(0.9);
+  opacity: 0;
+}
+
+li{
+  margin: 20px 0;
+}
+li:not(:last-child) {
+    margin-bottom: 5px;
+}
+
+html,
+body {
+  font-size: 100%; }
+
+body {
+  background: white;
+  color: #222222;
+  padding: 0;
+  margin: 0;
+  font-family: "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
+  font-weight: normal;
+  font-style: normal;
+  line-height: 1;
+  position: relative;
+  cursor: default;
+}
+
+/*.row {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 0;
+  margin-bottom: 0;
+  max-width: 62.5rem;
+  *zoom: 1; }
+
+*/
+  .reveal-modal-bg {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  background: black;
+  background: rgba(0, 0, 0, 0.45);
+  z-index: 98;
+  display: none;
+  top: 0;
+  left: 0; }
+
+.reveal-modal {
+  visibility: hidden;
+  display: none;
+  position: absolute;
+  left: 50%;
+  z-index: 99;
+  height: auto;
+  margin-left: -40%;
+  width: 80%;
+  background-color: white;
+  padding: 1.25rem;
+  border: solid 1px #666666;
+  -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+  top: 6.25rem; }
+  .reveal-modal .column,
+  .reveal-modal .columns {
+    min-width: 0; }
+  .reveal-modal > :first-child {
+    margin-top: 0; }
+  .reveal-modal > :last-child {
+    margin-bottom: 0; }
+  .reveal-modal .close-reveal-modal {
+    font-size: 1.375rem;
+    line-height: 1;
+    position: absolute;
+    top: 0.5rem;
+    right: 0.6875rem;
+    color: #aaaaaa;
+    font-weight: bold;
+    cursor: pointer; }
+
+    @media print {
+  .reveal-modal {
+    background: white !important; } }

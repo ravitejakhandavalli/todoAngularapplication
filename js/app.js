@@ -1,121 +1,121 @@
-angular.module("ToDo",['LocalStorageModule'])
 
-.controller("toDoContoller",["$scope","$filter","localStorageService", function($scope,$filter, localStorageService){
+var myapp = angular.module('todoApplication',['LocalStorageModule','ngMaterial','ngMessages']);
 
-	
-	$scope.allTasks = [];
-	$scope.completedTasks = [];
-	
-	if(localStorageService.get('allTasks'))
-		$scope.allTasks = localStorageService.get('allTasks');
-		
-	if(localStorageService.get('completedTasks'))
-	$scope.completedTasks = localStorageService.get('completedTasks');
-	
-	$scope.taskType = true; /* if true show pending tasks  else show completed tasks*/
-	$scope.type = "AllTask";
-	
-	
-	var updatingTaskIndex;
+myapp.controller('mainController',["$scope","$filter","localStorageService", function($scope,$filter,localStorageService) {
+  console.log("initiated");
 
-	$scope.newField = {};
-     $scope.editing = false;
+$scope.allTasks= [];
+$scope.completedTasks = [];
 
-	$scope.AddTask = function(){
-		if(event.which == 13 && $scope.taskName !="" && $scope.taskDesc !=""){
-			console.log("task add event initialised");
-			$scope.task('add');
-		}
-	};
+if(localStorageService.get('allTasks'))
+  $scope.allTasks = localStorageService.get('allTasks');
 
-	$scope.task = function(action) {
-		switch(action){
-			case 'add' 		:  		console.log("add button");
-									if($scope.taskName && $scope.taskDesc){
-									$scope.allTasks.push({taskName : $scope.taskName.trim(), taskDesc : $scope.taskDesc.trim()});
-									$scope.taskName = '';
-									$scope.taskDesc = '';
-									localStorageService.set('allTasks',$scope.allTasks);
-									
-									console.log(localStorageService.get('allTasks'));
-								}
-								break;
-			case 'update' 	: 	if($scope.updatedName && $scope.updatedDesc){
-									console.log(event.target.innerText);
-									$scope.allTasks.splice(updatingTaskIndex,1);
-									$scope.allTasks.splice(updatingTaskIndex, 0, {taskName : $scope.updatedName ,taskDesc : $scope.updatedDesc});
-									$scope.updatedName = '';
-									$scope.updatedDesc = '';
-									
-									localStorageService.set('allTasks',$scope.allTasks);
+if(localStorageService.get('completedTasks'))
+$scope.completedTasks = localStorageService.get('completedTasks');
 
-								}
-			
-		}
-	}	
+/*$scope.taskType = true;  if true show pending tasks  else show completed tasks*/
+$scope.type = "PendingTask";
+var navigationHeight =0;
+var updatingTaskIndex;
 
-	
-$scope.editAppKey = function(task) {
-	updatingTaskIndex = $scope.allTasks.indexOf(task);
-	console.log($scope.allTasks.indexOf(task));
-    $scope.editing = true;
-    console.log($scope.editing);
-   $scope.newField = angular.copy(task);
-    console.log($scope.newField);
-}
+$scope.newField = {};
+   $scope.editing = false;
+   $scope.editDesc=false;
 
-$scope.saveEdit = function($index) {
-	console.log("save triggere");
-    if ($scope.editing !== false) {
-    	$scope.updatedName = $scope.allTasks[$index].taskName;
-		$scope.updatedDesc = $scope.allTasks[$index].taskDesc;
-		$scope.task('update');
-        $scope.editing = false;
-    }       
+$scope.modalShown = false;
+$scope.toggleModal = function(tasks) {
+  $scope.modalShown = !$scope.modalShown;
+  $scope.taskToEdit = tasks;
+  updatingTaskIndex = $scope.allTasks.indexOf($scope.taskToEdit);
 };
 
-$scope.cancel = function() {
-    if ($scope.editing !== false) {
-        $scope.allTasks[updatingTaskIndex] = $scope.newField;
-        $scope.editing = false;
-    }       
-};
+$scope.currentNavItem = 'Today';
 
-	
-	$scope.taskCompleted = function(index){
+  $scope.AddTask = function(){
+    if($scope.taskName != null && $scope.myDate != null){
+      $scope.task('add');
+    }
+  };
+
+  $scope.task = function(action){
+    switch(action) {
+      case 'add' :  $scope.allTasks.push({ TaskTitle: $scope.taskName, TaskDate: $scope.myDate , TaskDesc : $scope.taskDesc});
+                    $scope.taskName = '';
+                    $scope.myDate ='';
+                    $scope.taskDesc = '';
+                    localStorageService.set('allTasks',$scope.allTasks);
+                    break;
+    case 'update' : if($scope.updatedName != null && $scope.updatedDesc !=null && $scope.updatedDate !=null){
+                    $scope.allTasks.splice(updatingTaskIndex,1);
+                    $scope.allTasks.splice(updatingTaskIndex, 0, {TaskTitle : $scope.updatedName ,TaskDate :$scope.updatedDate, TaskDesc : $scope.updatedDesc});
+                    $scope.updatedName = '';
+                    $scope.updatedDesc = '';
+                    $scope.updatedDate = '';
+                    localStorageService.set('allTasks',$scope.allTasks);
+                    }
+
+      }
+
+  }
+
+  $scope.taskCompleted = function(index){
 		var completed = $scope.allTasks.splice(index,1);
 		localStorageService.set('allTasks',$scope.allTasks);
 		$scope.completedTasks.push(completed[0]);
 		localStorageService.set('completedTasks',$scope.completedTasks);
-		console.log(localStorageService.get('completedTasks'));
-		console.log($scope.completedTasks);
-		console.log('------------completedTasks-------------------------');
-		console.log($scope.allTasks);
-		console.log('------------pendingTasks-------------------------');
-	}
-	$scope.taskNotCompleted = function(index){
+}
+
+  $scope.taskNotCompleted = function(index){
 		var Notcompleted = $scope.completedTasks.splice(index,1);
 		localStorageService.set('completedTasks',$scope.completedTasks);
 		$scope.allTasks.push(Notcompleted[0]);
 		localStorageService.set('allTasks',$scope.allTasks);
-		console.log(localStorageService.get('allTasks'));
-		console.log($scope.completedTasks);
-		console.log('------------completedTasks-------------------------');
-		console.log($scope.allTasks);
-		console.log('------------pendingTasks-------------------------');
-	}
+}
 
-	$scope.$watch('taskType',function(){
-		$scope.type = $scope.taskType == false?'CompletedTask':'AllTask';
-	});
+  $scope.editAppKey = function(taskToEdit) {
+  	updatingTaskIndex = $scope.allTasks.indexOf(taskToEdit);
+    $scope.editing = true;
+      // console.log($scope.editing);
+     $scope.newField = angular.copy(taskToEdit);
+      // console.log($scope.newField);
+  }
 
-		$scope.removeTask = function(type, index){
-			if(type == 'pending'){
-				$scope.allTasks.splice(index, 1);
-				localStorageService.set('allTasks',$scope.allTasks);
-			} else {
-				$scope.completedTasks.splice(index, 1);
-				localStorageService.set('completedTasks',$scope.completedTasks);
-			}
-		}
+  $scope.saveEdit = function() {
+      if ($scope.editing !== false) {
+          // console.log($scope.allTasks[updatingTaskIndex].TaskDesc);
+          $scope.updatedName = $scope.allTasks[updatingTaskIndex].TaskTitle;
+      		$scope.updatedDesc = $scope.allTasks[updatingTaskIndex].TaskDesc;
+          $scope.updatedDate = $scope.allTasks[updatingTaskIndex].TaskDate;
+          // console.log($scope.updatedName,$scope.updatedDesc,$scope.updatedDate);
+      		$scope.task('update');
+          $scope.editing = false;
+      }
+  };
+
+  $scope.cancel = function() {
+      if ($scope.editing !== false) {
+          $scope.allTasks[updatingTaskIndex] = $scope.newField;
+          $scope.editing = false;
+      }
+  };
+
+
+$scope.removeTask = function(type, index){
+      if(type == 'pending'){
+        $scope.allTasks.splice(index, 1);
+        localStorageService.set('allTasks',$scope.allTasks);
+      } else {
+        $scope.completedTasks.splice(index, 1);
+        localStorageService.set('completedTasks',$scope.completedTasks);
+      }
+    };
+
+
+
 }]);
+
+
+/**
+Copyright 2016 Google Inc. All Rights Reserved.
+Use of this source code is governed by an MIT-style license that can be foundin the LICENSE file at http://material.angularjs.org/HEAD/license.
+**/
