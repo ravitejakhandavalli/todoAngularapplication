@@ -39,7 +39,7 @@
                       <div ng-message="filtered">Only weekends are allowed!</div>
                    </div>-->
              </md-content>
-             <button ng-click="AddTask()">Add Task</button>
+             <button style="background-color:#364ce6;color:white;border:none;height:40px;border-radius:10px;width:80px;"ng-click="AddTask()">Add</button>
       </div>
 </div>
 
@@ -55,19 +55,19 @@
   <!-- ---------------------------------------------------------------------------------->
 <div class="" ng-show="type == 'PendingTask' ">
   <div class='md-padding' layout="row" layout-wrap>
-          <md-card class="card" ng-repeat="tasks in allTasks ">
+          <md-card class="card" ng-repeat="tasks in allTasks">
           <span ng-click='toggleModal(tasks)'>
               <md-card-content>
                  <h4>{{tasks.TaskTitle}}</h4>
                  <h4>{{tasks.TaskDate | date:'dd-MMM-yyyy'}}</h4>
-               <div class="md-actions" layout="row" layout-align="end center">
+              <div class="containerButtons">
+                 <i id="thumb" class="fa fa-thumbs-up fa-2x" aria-hidden="true" ng-click="taskCompleted($index)" title="Task Completed"></i>
+                 <i id="deleteButton" class="fa fa-minus-square fa-2x" ng-click="removeTask('pending', $index)" title="Delete Task"></i>
                </div>
              </md-card-content>
            </sapn>
            <div>
-           <i id="thumb" class="fa fa-thumbs-up fa-2x" aria-hidden="true" ng-click="taskCompleted($index)" title="Task Completed"></i>
-           <i id="deleteButton" class="fa fa-minus-square fa-2x" ng-click="removeTask('pending', $index)" title="Delete Task"></i>
-</div>
+           </div>
              </md-card>
       </div>
 </div>

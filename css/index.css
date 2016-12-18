@@ -50,28 +50,31 @@ a:link {
 .card:hover{
   box-shadow: 0 16px 16px 0 rgba(0,0,0,0.4);
 }
-
+/*
 .container {
   padding: 0 0 2px 16px;
-}
+}*/
 
 .button-class {
   padding-top: 100px;
 
 }
-
 #thumb{
   cursor: pointer;
   color: green;
   float: right;
-  padding:20px;
+  padding: 20px;
 }
-
 #deleteButton{
   cursor: pointer;
   color: red;
   float: left;
-  padding:20px;
+  padding: 20px;
+
+}
+
+.containerButtons {
+  padding: 0 0 2px 16px;
 }
 /*
 .button-class i {
