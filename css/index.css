@@ -1,7 +1,44 @@
 
-.taskInput{
+.taskInput,#editModeText {
   padding: 8px;
   width: 250px;
+}
+
+/*#editModeText{
+  padding:8px;
+  width:250px;
+}*/
+
+.buttonFamily{
+  background-color:#364ce6;
+  color:white;
+  border:none;
+  height:40px;
+  width:80px;
+  border-radius:10px;
+}
+
+.saveButton{
+  border:none;
+  height:30px;
+  width:60px;
+  border-radius:10px;
+  margin-right: 40px;
+}
+
+.lightboxButtons{
+  position: absolute;;
+}
+span:focus {
+    outline: none;
+    border: 0;
+ }
+
+.cancelButton{
+  border:none;
+  height:30px;
+  width:60px;
+  border-radius:10px;
 }
 .md-datepicker-input-container {
   width: 30px;

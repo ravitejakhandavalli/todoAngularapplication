@@ -39,7 +39,7 @@
                       <div ng-message="filtered">Only weekends are allowed!</div>
                    </div>-->
              </md-content>
-             <button style="background-color:#364ce6;color:white;border:none;height:40px;border-radius:10px;width:80px;"ng-click="AddTask()">Add</button>
+             <button class="buttonFamily" ng-click="AddTask()">Add</button>
       </div>
 </div>
 
@@ -61,10 +61,11 @@
                  <h4>{{tasks.TaskTitle}}</h4>
                  <h4>{{tasks.TaskDate | date:'dd-MMM-yyyy'}}</h4>
               <div class="containerButtons">
-                 <i id="thumb" class="fa fa-thumbs-up fa-2x" aria-hidden="true" ng-click="taskCompleted($index)" title="Task Completed"></i>
-                 <i id="deleteButton" class="fa fa-minus-square fa-2x" ng-click="removeTask('pending', $index)" title="Delete Task"></i>
+
                </div>
              </md-card-content>
+             <i id="thumb" class="fa fa-thumbs-up fa-2x" aria-hidden="true" ng-click="taskCompleted($index)" title="Task Completed"></i>
+             <i id="deleteButton" class="fa fa-minus-square fa-2x" ng-click="removeTask('pending', $index)" title="Delete Task"></i>
            </sapn>
            <div>
            </div>
@@ -121,19 +122,21 @@
           <modal show='modalShown'>
                 <h4 style="text-align:center">YOur Task To Complete</h4>
                 <ul style="list-style:none">
-                <li>  <label>Task Name:</label>
+                <li>  <label style="margin-right:50px;"><strong><em> Task Name: </em></strong></label>
                 <span data-ng-hide="editMode" contentEditable="false" ng-dblclick="editMode = true; editAppKey(taskToEdit)" ng-model="editableTask">{{taskToEdit.TaskTitle}}</span>
                 <input id="editModeText" type="text" data-ng-show="editMode" data-ng-model="taskToEdit.TaskTitle" data-ng-required />
               </li>
               <li>
-                <label for="description">Description:</label>
+                <label for="description" style="margin-right:45px;"><strong><em>Description:</em></strong></label>
                 <span data-ng-hide="editMode" contentEditable="false" ng-dblclick="editMode = true; editAppKey(taskToEdit)" ng-model="editableDesc">{{taskToEdit.TaskDesc}}</span>
-                 <textarea style="width:300px;height:100px" id="editModeText"type="text" data-ng-show="editMode" data-ng-model="taskToEdit.TaskDesc" data-ng-required /></textarea>
+                 <textarea style="width:250px;height:80px" id="editModeText"type="text" data-ng-show="editMode" data-ng-model="taskToEdit.TaskDesc" data-ng-required /></textarea>
               <li>
-                <button type="submit" data-ng-show="editMode" data-ng-click="saveEdit(taskToEdit);editMode = false;" class="btn btn-default">Save</button>
+                <div class="lightboxButtons">
+                <button class="saveButton" type="submit" data-ng-show="editMode" data-ng-click="saveEdit(taskToEdit);editMode = false;" class="btn btn-default">Save</button>
 
-                <button type="submit" data-ng-show="editMode" data-ng-click="editMode = false; cancel()" class="btn btn-default">Cancel</button>
-        </li></ul>  </modal>
+                <button class="cancelButton" type="submit" data-ng-show="editMode" data-ng-click="editMode = false; cancel()" class="btn btn-default">Cancel</button>
+              </div>
+      </li></ul>  </modal>
     <!--  <div class="" ng-repeat="tasks in allTasks">
          <a href="">
            <div class="card">

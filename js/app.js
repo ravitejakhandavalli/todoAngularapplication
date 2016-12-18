@@ -18,6 +18,9 @@ $scope.type = "PendingTask";
 var navigationHeight =0;
 var updatingTaskIndex;
 
+$scope.taskName = '';
+$scope.myDate = '';
+$scope.taskDesc='';
 $scope.newField = {};
    $scope.editing = false;
    $scope.editDesc=false;
@@ -32,26 +35,24 @@ $scope.toggleModal = function(tasks) {
 $scope.currentNavItem = 'Today';
 
   $scope.AddTask = function(){
-    if($scope.taskName != null && $scope.myDate != null){
-      $scope.task('add');
+
+    if($scope.taskName != '' && $scope.myDate != ''){
+      console.log("taskName is:"+$scope.taskName,$scope.myDate);
+     $scope.task('add');
     }
   };
 
   $scope.task = function(action){
     switch(action) {
       case 'add' :  $scope.allTasks.push({ TaskTitle: $scope.taskName, TaskDate: $scope.myDate , TaskDesc : $scope.taskDesc});
-                    $scope.taskName = '';
-                    $scope.myDate ='';
-                    $scope.taskDesc = '';
                     localStorageService.set('allTasks',$scope.allTasks);
+                    $scope.taskName = '';
+                    $scope.taskDesc='';
                     break;
     case 'update' : if($scope.updatedName != null && $scope.updatedDesc !=null && $scope.updatedDate !=null){
                     $scope.allTasks.splice(updatingTaskIndex,1);
                     $scope.allTasks.splice(updatingTaskIndex, 0, {TaskTitle : $scope.updatedName ,TaskDate :$scope.updatedDate, TaskDesc : $scope.updatedDesc});
-                    $scope.updatedName = '';
-                    $scope.updatedDesc = '';
-                    $scope.updatedDate = '';
-                    localStorageService.set('allTasks',$scope.allTasks);
+                   localStorageService.set('allTasks',$scope.allTasks);
                     }
 
       }
