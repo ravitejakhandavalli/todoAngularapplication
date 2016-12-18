@@ -55,7 +55,7 @@
   <!-- ---------------------------------------------------------------------------------->
 <div class="" ng-show="type == 'PendingTask' ">
   <div class='md-padding' layout="row" layout-wrap>
-          <md-card class="card" ng-repeat="tasks in allTasks | filter:statusFilter track by $index">
+          <md-card class="card" ng-repeat="tasks in allTasks">
           <span ng-click='toggleModal(tasks)'>
               <md-card-content>
                  <h4>{{tasks.TaskTitle}}</h4>
