@@ -22,8 +22,8 @@ $scope.taskName = '';
 $scope.myDate = '';
 $scope.taskDesc='';
 $scope.newField = {};
-   $scope.editing = false;
-   $scope.editDesc=false;
+
+$scope.editing = false;
 
 $scope.modalShown = false;
 $scope.toggleModal = function(tasks) {
@@ -50,8 +50,11 @@ $scope.currentNavItem = 'Today';
                     $scope.taskDesc='';
                     break;
     case 'update' : if($scope.updatedName != null && $scope.updatedDesc !=null && $scope.updatedDate !=null){
-                    $scope.allTasks.splice(updatingTaskIndex,1);
-                    $scope.allTasks.splice(updatingTaskIndex, 0, {TaskTitle : $scope.updatedName ,TaskDate :$scope.updatedDate, TaskDesc : $scope.updatedDesc});
+                  //  $scope.allTasks.splice(updatingTaskIndex,1);
+                    // $scope.allTasks.splice(updatingTaskIndex, 0, {TaskTitle : $scope.updatedName ,TaskDate :$scope.updatedDate, TaskDesc : $scope.updatedDesc});
+                    $scope.allTasks[updatingTaskIndex].TaskTitle = $scope.updatedName;
+                    $scope.allTasks[updatingTaskIndex].TaskDate = $scope.updatedDate;
+                    $scope.allTasks[updatingTaskIndex].TaskDesc = $scope.updatedDesc;
                    localStorageService.set('allTasks',$scope.allTasks);
                     }
 
@@ -83,7 +86,6 @@ $scope.currentNavItem = 'Today';
 
   $scope.saveEdit = function() {
       if ($scope.editing !== false) {
-          // console.log($scope.allTasks[updatingTaskIndex].TaskDesc);
           $scope.updatedName = $scope.allTasks[updatingTaskIndex].TaskTitle;
       		$scope.updatedDesc = $scope.allTasks[updatingTaskIndex].TaskDesc;
           $scope.updatedDate = $scope.allTasks[updatingTaskIndex].TaskDate;
@@ -93,8 +95,9 @@ $scope.currentNavItem = 'Today';
       }
   };
 
+
   $scope.cancel = function() {
-      if ($scope.editing !== false) {
+      if ($scope.editing !== false ) {
           $scope.allTasks[updatingTaskIndex] = $scope.newField;
           $scope.editing = false;
       }

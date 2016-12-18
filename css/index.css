@@ -24,7 +24,8 @@ head,body{
 }
 
 .lightboxButtons{
-  position: absolute;;
+  position: absolute;
+  margin-left: 150px;
 }
 span:focus {
     outline: none;
